@@ -2,38 +2,33 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {StatusBar, Text, View, StyleSheet} from 'react-native';
+import {StatusBar} from 'react-native';
 import Home from './screens/Home';
 import SearchScreen from './screens/SearchScreen';
-
-const Profile = () => (
-  <View style={styles.container}>
-    <Text style={styles.text}>Profile Screen</Text>
-  </View>
-);
-
-const Settings = () => (
-  <View style={styles.container}>
-    <Text style={styles.text}>Settings Screen</Text>
-  </View>
-);
-
-const Settings2 = () => (
-  <View style={styles.container}>
-    <Text style={styles.text}>Settings2 Screen</Text>
-  </View>
-);
+import MicrophoneScreen from './screens/MicrophoneScreen';
+import CameraLensScreen from './screens/CameraLensScreen';
+import HistoryScreen from './screens/HistoryScreen';
+import NotificationScreen from './screens/NotificationScreen';
+import MenuScreen from './screens/MenuScreen';
+import {
+  HistoryIcon,
+  HomeIcon,
+  MenuIcon,
+  NotificationIcon,
+} from './utils/utilityFunctions';
 
 export type RootStackParamList = {
   BottomTabs: undefined;
   SearchScreen: undefined;
+  MicrophoneScreen: undefined;
+  CameraLensScreen: undefined;
 };
 
 export type BottomTabParamList = {
   Home: undefined;
-  Profile: undefined;
-  Settings: undefined;
-  Settings2: undefined;
+  History: undefined;
+  Notification: undefined;
+  Menu: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -50,6 +45,7 @@ function BottomTabs() {
         tabBarStyle: {
           backgroundColor: '#3C3C40',
           borderColor: '#3C3C40',
+          paddingTop: 10,
         },
         tabBarActiveTintColor: '#0df',
         tabBarInactiveTintColor: '#b0b0b0',
@@ -59,11 +55,37 @@ function BottomTabs() {
         component={Home}
         options={{
           headerTitle: '',
+          tabBarShowLabel: false,
+          tabBarIcon: ({color}) => HomeIcon({color, size: 24}),
         }}
       />
-      <Tab.Screen name="Profile" component={Profile} />
-      <Tab.Screen name="Settings" component={Settings} />
-      <Tab.Screen name="Settings2" component={Settings2} />
+      <Tab.Screen
+        name="History"
+        component={HistoryScreen}
+        options={{
+          headerTitle: '',
+          tabBarShowLabel: false,
+          tabBarIcon: ({color}) => HistoryIcon({color, size: 24}),
+        }}
+      />
+      <Tab.Screen
+        name="Notification"
+        component={NotificationScreen}
+        options={{
+          headerTitle: '',
+          tabBarShowLabel: false,
+          tabBarIcon: ({color}) => NotificationIcon({color, size: 24}),
+        }}
+      />
+      <Tab.Screen
+        name="Menu"
+        component={MenuScreen}
+        options={{
+          headerTitle: '',
+          tabBarShowLabel: false,
+          tabBarIcon: ({color}) => MenuIcon({color, size: 24}),
+        }}
+      />
     </Tab.Navigator>
   );
 }
@@ -83,7 +105,7 @@ export default function App(): React.JSX.Element {
         <Stack.Screen
           name="BottomTabs"
           component={BottomTabs}
-          options={{headerShown: false}}
+          options={{headerShown: false, title: ''}}
         />
         <Stack.Screen
           name="SearchScreen"
@@ -92,17 +114,21 @@ export default function App(): React.JSX.Element {
             title: 'Search',
           }}
         />
+        <Stack.Screen
+          name="MicrophoneScreen"
+          component={MicrophoneScreen}
+          options={{
+            title: 'Microphone',
+          }}
+        />
+        <Stack.Screen
+          name="CameraLensScreen"
+          component={CameraLensScreen}
+          options={{
+            title: 'CamerLens',
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#202124',
-  },
-  text: {
-    color: '#ffffff',
-  },
-});
