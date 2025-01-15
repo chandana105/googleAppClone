@@ -40,7 +40,9 @@ const Home = ({navigation}: HomeScreenProps) => {
             </Text>
 
             <SearchPlaceholder
-              onSearchPress={() => navigation.navigate('SearchScreen')}
+              onSearchPress={() =>
+                navigation.navigate('SearchScreen', {autoFocus: true})
+              }
               onMicrophonePress={() => navigation.navigate('MicrophoneScreen')}
               onLensPress={() => navigation.navigate('CameraLensScreen')}
             />

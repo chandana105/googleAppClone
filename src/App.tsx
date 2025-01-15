@@ -2,7 +2,7 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {StatusBar} from 'react-native';
+import {StatusBar, StyleSheet, View} from 'react-native';
 import Home from './screens/Home';
 import SearchScreen from './screens/SearchScreen';
 import MicrophoneScreen from './screens/MicrophoneScreen';
@@ -16,10 +16,12 @@ import {
   MenuIcon,
   NotificationIcon,
 } from './utils/utilityFunctions';
+import SearchBar from './components/SearchBar';
+import {useRoute} from '@react-navigation/native';
 
 export type RootStackParamList = {
   BottomTabs: undefined;
-  SearchScreen: undefined;
+  SearchScreen: {autoFocus: boolean};
   MicrophoneScreen: undefined;
   CameraLensScreen: undefined;
 };
@@ -90,6 +92,26 @@ function BottomTabs() {
   );
 }
 
+function CustomHeader({navigation}: any) {
+  const route = useRoute();
+  const {autoFocus} = route.params as {autoFocus: boolean};
+
+  return (
+    <View style={styles.headerContainer}>
+      <SearchBar
+        onMicrophonePress={() => navigation.navigate('MicrophoneScreen')}
+        onLensPress={() => navigation.navigate('CameraLensScreen')}
+        onBackPress={() => navigation.goBack()}
+        autoFocus={autoFocus}
+      />
+    </View>
+  );
+}
+
+const searchScreenOptions = (navigation: any) => ({
+  header: () => <CustomHeader navigation={navigation} />,
+});
+
 export default function App(): React.JSX.Element {
   return (
     <NavigationContainer>
@@ -110,9 +132,7 @@ export default function App(): React.JSX.Element {
         <Stack.Screen
           name="SearchScreen"
           component={SearchScreen}
-          options={{
-            title: 'Search',
-          }}
+          options={({navigation}) => searchScreenOptions(navigation)}
         />
         <Stack.Screen
           name="MicrophoneScreen"
@@ -132,3 +152,12 @@ export default function App(): React.JSX.Element {
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  headerContainer: {
+    height: 120,
+    backgroundColor: '#202124',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+});
