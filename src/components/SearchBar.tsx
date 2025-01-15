@@ -1,9 +1,10 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {View, TextInput, Pressable, StyleSheet} from 'react-native';
 import {HeaderBackButton} from '@react-navigation/elements';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconMicrophone from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconLens from 'react-native-vector-icons/MaterialCommunityIcons';
+import useSearch from '../hooks/useSearch';
 
 type SearchBarProps = {
   onMicrophonePress: () => void;
@@ -18,8 +19,9 @@ function SearchBar({
   onBackPress,
   autoFocus = false,
 }: SearchBarProps) {
-  const [userInput, setUserInput] = useState('');
   const textInputRef = useRef<TextInput>(null);
+
+  const {searchQuery, updateSearchQuery, toggleSuggestions} = useSearch();
 
   useEffect(() => {
     if (autoFocus) {
@@ -30,11 +32,20 @@ function SearchBar({
         }
       }, 100); // Delay by 100ms
     }
-  }, [autoFocus]); // Focus when autoFocus changes
+  }, [autoFocus]);
 
   const clearInput = () => {
-    setUserInput('');
+    updateSearchQuery('');
+    toggleSuggestions(false);
   };
+
+  const handleInputChange = (text: string) => {
+    updateSearchQuery(text);
+    toggleSuggestions(true);
+  };
+
+  const handleFocus = () => toggleSuggestions(true);
+  const handleBlur = () => toggleSuggestions(false);
 
   return (
     <View
@@ -43,24 +54,29 @@ function SearchBar({
       <View style={styles.leftSection} className="rounded-full px-2">
         <View className="flex flex-row items-center">
           <HeaderBackButton
-            onPress={onBackPress}
-            tintColor="#ffffff"
+            onPress={() => {
+              onBackPress();
+              clearInput();
+            }}
+            tintColor="#aaa"
             style={styles.headerBackButton}
           />
           <TextInput
             ref={textInputRef}
             className="w-11/12 text-white"
             keyboardType="default"
-            placeholder="Search for Restaurants"
+            placeholder="Search or type URL"
             placeholderTextColor="#aaa"
-            onChangeText={text => setUserInput(text)}
-            value={userInput}
+            value={searchQuery}
+            onChangeText={handleInputChange}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             style={styles.textInput}
           />
         </View>
       </View>
 
-      {userInput ? (
+      {searchQuery ? (
         <View style={[styles.rightSection, styles.closeButton]}>
           <Pressable onPress={clearInput}>
             <Icon name="close" size={25} color="#777" className="mr-4" />

@@ -41,3 +41,23 @@ export const feedCardsMockData = [
     timestamp: '5d',
   },
 ];
+
+export const recentSearches = [
+  'How to test camera for iOS apps How to test camera for iOS apps How to test camera for iOS apps',
+  'Sites names',
+  'Jalandhar weather',
+  'New places',
+  'Nearby restaurants',
+  'Top tourist attractions in India',
+  'Latest iOS features',
+  'Best programming languages for mobile development',
+  'Upcoming tech conferences 2025',
+  'Weather in New York City',
+  'Affordable travel destinations',
+  'Popular recipes for dinner',
+  'Best workout routines for beginners',
+  'Jalandhar weather',
+  'New places',
+  'Nearby restaurants',
+  'Top tourist attractions in India',
+];

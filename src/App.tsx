@@ -18,6 +18,8 @@ import {
 } from './utils/utilityFunctions';
 import SearchBar from './components/SearchBar';
 import {useRoute} from '@react-navigation/native';
+import {Provider} from 'react-redux';
+import appStore from './store/appStore';
 
 export type RootStackParamList = {
   BottomTabs: undefined;
@@ -114,42 +116,44 @@ const searchScreenOptions = (navigation: any) => ({
 
 export default function App(): React.JSX.Element {
   return (
-    <NavigationContainer>
-      <StatusBar backgroundColor="#202124" barStyle="light-content" />
-      <Stack.Navigator
-        initialRouteName="BottomTabs"
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: '#202124',
-          },
-          headerTintColor: '#ffffff',
-        }}>
-        <Stack.Screen
-          name="BottomTabs"
-          component={BottomTabs}
-          options={{headerShown: false, title: ''}}
-        />
-        <Stack.Screen
-          name="SearchScreen"
-          component={SearchScreen}
-          options={({navigation}) => searchScreenOptions(navigation)}
-        />
-        <Stack.Screen
-          name="MicrophoneScreen"
-          component={MicrophoneScreen}
-          options={{
-            title: 'Microphone',
-          }}
-        />
-        <Stack.Screen
-          name="CameraLensScreen"
-          component={CameraLensScreen}
-          options={{
-            title: 'CamerLens',
-          }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={appStore}>
+      <NavigationContainer>
+        <StatusBar backgroundColor="#202124" barStyle="light-content" />
+        <Stack.Navigator
+          initialRouteName="BottomTabs"
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: '#202124',
+            },
+            headerTintColor: '#ffffff',
+          }}>
+          <Stack.Screen
+            name="BottomTabs"
+            component={BottomTabs}
+            options={{headerShown: false, title: ''}}
+          />
+          <Stack.Screen
+            name="SearchScreen"
+            component={SearchScreen}
+            options={({navigation}) => searchScreenOptions(navigation)}
+          />
+          <Stack.Screen
+            name="MicrophoneScreen"
+            component={MicrophoneScreen}
+            options={{
+              title: 'Microphone',
+            }}
+          />
+          <Stack.Screen
+            name="CameraLensScreen"
+            component={CameraLensScreen}
+            options={{
+              title: 'CamerLens',
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 
