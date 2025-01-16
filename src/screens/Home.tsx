@@ -3,13 +3,17 @@ import React from 'react';
 import {CompositeScreenProps} from '@react-navigation/native';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {BottomTabParamList, RootStackParamList} from '../App';
 import FeedCard from '../components/FeedCard';
 import FlatCards from '../components/FlatCard';
 import ElevatedCards from '../components/ElevatedCards';
 import Seperator from '../components/Seperator';
 import SearchPlaceholder from '../components/SearchPlaceholder';
 import {feedCardsMockData} from '../helper/mockData';
+import {
+  BottomTabParamList,
+  FeedCardObject,
+  RootStackParamList,
+} from '../../app';
 
 type HomeScreenProps = CompositeScreenProps<
   BottomTabScreenProps<BottomTabParamList, 'Home'>,
@@ -17,7 +21,7 @@ type HomeScreenProps = CompositeScreenProps<
 >;
 
 const Home = ({navigation}: HomeScreenProps) => {
-  const renderFeedCard = ({item}: {item: FeedCard}) => {
+  const renderFeedCard = ({item}: {item: FeedCardObject}) => {
     return (
       <FeedCard
         imageUrl={item.imageUrl}
