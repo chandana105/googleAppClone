@@ -1,10 +1,11 @@
 import {View, Pressable} from 'react-native';
 import React from 'react';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, NavigationProp} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {RootStackParamList} from '../App';
 
 const AddToSearchScreenBottomTabs = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   return (
     <View className="flex-row justify-around bg-[#3C3C40] py-3 pt-6 h-[80]">

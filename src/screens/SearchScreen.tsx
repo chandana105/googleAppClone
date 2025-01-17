@@ -11,6 +11,7 @@ const SearchScreen = () => {
   useEffect(() => {
     // Clear search state when the screen mounts
     clearSearchState();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const renderItem = ({item}: any) => (

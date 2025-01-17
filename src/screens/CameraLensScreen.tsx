@@ -27,8 +27,6 @@ import {clearCapturedPhoto, setIsSubmitted} from '../store/addToSearchSlice';
 
 const {height} = Dimensions.get('window');
 
-// when going to cameralens screen alsways if there is already caputred photo to clear it
-
 const CameraLensScreen = ({navigation}: any) => {
   const camera = useRef<Camera>(null);
   const device = useCameraDevice('back');
@@ -45,6 +43,7 @@ const CameraLensScreen = ({navigation}: any) => {
       dispatch(clearCapturedPhoto());
       dispatch(setIsSubmitted(false));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (hasPermission === null) {
