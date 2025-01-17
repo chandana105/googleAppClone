@@ -19,7 +19,6 @@ const useSearch = () => {
     if (!searchQuery) return;
 
     if (cache[searchQuery]) {
-      console.log('no api call');
       dispatch(setSearchSuggestions(cache[searchQuery]));
       return;
     }
@@ -31,7 +30,6 @@ const useSearch = () => {
 
       dispatch(setSearchSuggestions(json[1]));
       dispatch(cacheResults({[searchQuery]: json[1]}));
-      console.log('yes api call');
     } catch (error) {
       console.error('Failed to fetch search suggestions:', error);
     }

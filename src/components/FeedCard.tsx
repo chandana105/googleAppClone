@@ -1,21 +1,23 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {PropsWithChildren} from 'react';
 import IconHeart from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconShare from 'react-native-vector-icons/MaterialIcons';
 import IconThreeDots from 'react-native-vector-icons/Entypo';
 import Seperator from './Seperator';
 
-function FeedCard({
-  imageUrl,
-  description,
-  author,
-  timestamp,
-}: {
+type FeedCardProps = PropsWithChildren<{
   imageUrl: string;
   description: string;
   author: string;
   timestamp: string;
-}) {
+}>;
+
+const FeedCard = ({
+  imageUrl,
+  description,
+  author,
+  timestamp,
+}: FeedCardProps) => {
   return (
     <>
       <View className="flex justify-center items-center px-5 pt-5 pb-2">
@@ -61,7 +63,7 @@ function FeedCard({
       <Seperator />
     </>
   );
-}
+};
 
 const styles = StyleSheet.create({
   cardImage: {

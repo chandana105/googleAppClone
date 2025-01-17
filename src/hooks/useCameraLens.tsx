@@ -15,7 +15,7 @@ const useCameraLens = ({navigation, camera}: any) => {
   // Handle the gesture for the draggable view
   const handleGesture = (event: any) => {
     if (event.nativeEvent.translationY < -150) {
-      navigation.navigate('AddToSearch');
+      navigation.navigate('AddToSearch', {autoFocus: true});
     } else {
       translateY.value = withSpring(0);
     }
@@ -35,11 +35,6 @@ const useCameraLens = ({navigation, camera}: any) => {
       Alert.alert('Error', 'Failed to capture photo. Please try again.');
     }
   };
-
-  // const handleCropPhoto = () => {
-  //   Alert.alert('Crop Feature', 'Cropping is not implemented yet.');
-  //   // Here, integrate a cropping library like react-native-image-crop-picker
-  // };
 
   return {
     translateY,

@@ -61,3 +61,16 @@ export const recentSearches = [
   'Nearby restaurants',
   'Top tourist attractions in India',
 ];
+
+export const dummyImageResults = [
+  {id: 1, url: 'https://via.placeholder.com/150'},
+  {id: 2, url: 'https://via.placeholder.com/150'},
+  {id: 3, url: 'https://via.placeholder.com/150'},
+  {id: 4, url: 'https://via.placeholder.com/150'},
+  {id: 5, url: 'https://via.placeholder.com/150'},
+  {id: 6, url: 'https://via.placeholder.com/150'},
+  {id: 7, url: 'https://via.placeholder.com/150'},
+  {id: 8, url: 'https://via.placeholder.com/150'},
+  {id: 9, url: 'https://via.placeholder.com/150'},
+  {id: 10, url: 'https://via.placeholder.com/150'},
+];

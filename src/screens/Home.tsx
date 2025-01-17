@@ -9,11 +9,7 @@ import ElevatedCards from '../components/ElevatedCards';
 import Seperator from '../components/Seperator';
 import SearchPlaceholder from '../components/SearchPlaceholder';
 import {feedCardsMockData} from '../helper/mockData';
-import {
-  BottomTabParamList,
-  FeedCardObject,
-  RootStackParamList,
-} from '../../app';
+import {BottomTabParamList, RootStackParamList} from '../App';
 
 type HomeScreenProps = CompositeScreenProps<
   BottomTabScreenProps<BottomTabParamList, 'Home'>,

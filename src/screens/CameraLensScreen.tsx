@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
   View,
   Text,
@@ -19,23 +19,33 @@ import {
 } from 'react-native-gesture-handler';
 import Animated, {withSpring} from 'react-native-reanimated';
 import ImageSearch from '../components/ImageSearch';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../store/appStore';
 import useCameraLens from '../hooks/useCameraLens';
 import {CameraLensPermissions} from '../utils/utilityFunctions';
+import {clearCapturedPhoto, setIsSubmitted} from '../store/addToSearchSlice';
 
 const {height} = Dimensions.get('window');
 
-export default function CameraLensScreen({navigation}: any) {
+// when going to cameralens screen alsways if there is already caputred photo to clear it
+
+const CameraLensScreen = ({navigation}: any) => {
   const camera = useRef<Camera>(null);
   const device = useCameraDevice('back');
-
+  const dispatch = useDispatch();
   const {hasPermission, requestPermission} = useCameraPermission();
 
   const {capturedPhoto} = useSelector((state: RootState) => state.addToSearch);
 
   const {translateY, animatedStyle, handleTakePhoto, handleGesture} =
     useCameraLens({navigation, camera});
+
+  useEffect(() => {
+    if (capturedPhoto) {
+      dispatch(clearCapturedPhoto());
+      dispatch(setIsSubmitted(false));
+    }
+  }, []);
 
   if (hasPermission === null) {
     return (
@@ -128,20 +138,14 @@ export default function CameraLensScreen({navigation}: any) {
             }}>
             <Animated.View style={[styles.draggableView, animatedStyle]}>
               <ImageSearch goToAddToSearch={goToAddToSearch} />
-              <Text style={styles.dragText}>Add to your search</Text>
-              <Text style={styles.dragText}>Add to your search</Text>
-              <Text style={styles.dragText}>Add to your search</Text>
-              <Text style={styles.dragText}>Add to your search</Text>
-              <Text style={styles.dragText}>Add to your search</Text>
-              <Text style={styles.dragText}>Add to your search</Text>
-              <Text style={styles.dragText}>Add to your search</Text>
+              <View className="h-44" />
             </Animated.View>
           </PanGestureHandler>
         )}
       </View>
     </GestureHandlerRootView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -172,3 +176,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 });
+
+export default CameraLensScreen;

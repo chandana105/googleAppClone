@@ -3,20 +3,14 @@ import IconHistory from 'react-native-vector-icons/MaterialIcons';
 import IconNotification from 'react-native-vector-icons/MaterialIcons';
 import IconMenu from 'react-native-vector-icons/MaterialIcons';
 import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {BottomTabParamList} from '../../app';
-import Home from '../screens/Home';
-import HistoryScreen from '../screens/HistoryScreen';
-import NotificationScreen from '../screens/NotificationScreen';
-import MenuScreen from '../screens/MenuScreen';
 import {useRoute} from '@react-navigation/native';
 import IconDots from 'react-native-vector-icons/MaterialIcons';
 import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
 import SearchBar from '../components/SearchBar';
 import {HeaderBackButton} from '@react-navigation/elements';
 import AddToSearchHeader from '../components/AddToSearchHeader';
-
-const Tab = createBottomTabNavigator<BottomTabParamList>();
+import {useDispatch} from 'react-redux';
+import {clearCapturedPhoto} from '../store/addToSearchSlice';
 
 export const HomeIcon = ({color, size}: {color: string; size: number}) => (
   <Icon name="home" size={size} color={color} />
@@ -55,9 +49,15 @@ export function CustomHeader({navigation}: any) {
 }
 
 export function CustomCameraScreenheader({navigation}: any) {
+  const dispatch = useDispatch();
+
+  const handleBackPress = () => {
+    dispatch(clearCapturedPhoto());
+    navigation.goBack();
+  };
   return (
     <View style={styles.header}>
-      <HeaderBackButton tintColor="#aaa" onPress={() => navigation.goBack()} />
+      <HeaderBackButton tintColor="#aaa" onPress={handleBackPress} />
       <Text style={styles.headerText}>Google Lens</Text>
       <IconDots name="more-vert" size={24} color="#fff" />
     </View>
@@ -67,7 +67,6 @@ export function CustomCameraScreenheader({navigation}: any) {
 export function CustomAddToSearchHeader() {
   const route = useRoute();
   const {autoFocus} = route.params as {autoFocus: boolean};
-  console.log({autoFocus});
   return (
     <View style={styles.headerContainer}>
       <AddToSearchHeader autoFocus={autoFocus} />
@@ -97,62 +96,6 @@ export const CameraLensPermissions = ({requestPermission}: any) => {
     </View>
   );
 };
-
-export function BottomTabs() {
-  return (
-    <Tab.Navigator
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: '#202124',
-        },
-        headerTintColor: '#ffffff',
-        tabBarStyle: {
-          backgroundColor: '#3C3C40',
-          borderColor: '#3C3C40',
-          paddingTop: 10,
-        },
-        tabBarActiveTintColor: '#0df',
-        tabBarInactiveTintColor: '#b0b0b0',
-      }}>
-      <Tab.Screen
-        name="Home"
-        component={Home}
-        options={{
-          headerTitle: '',
-          tabBarShowLabel: false,
-          tabBarIcon: ({color}) => HomeIcon({color, size: 24}),
-        }}
-      />
-      <Tab.Screen
-        name="History"
-        component={HistoryScreen}
-        options={{
-          headerTitle: '',
-          tabBarShowLabel: false,
-          tabBarIcon: ({color}) => HistoryIcon({color, size: 24}),
-        }}
-      />
-      <Tab.Screen
-        name="Notification"
-        component={NotificationScreen}
-        options={{
-          headerTitle: '',
-          tabBarShowLabel: false,
-          tabBarIcon: ({color}) => NotificationIcon({color, size: 24}),
-        }}
-      />
-      <Tab.Screen
-        name="Menu"
-        component={MenuScreen}
-        options={{
-          headerTitle: '',
-          tabBarShowLabel: false,
-          tabBarIcon: ({color}) => MenuIcon({color, size: 24}),
-        }}
-      />
-    </Tab.Navigator>
-  );
-}
 
 const styles = StyleSheet.create({
   headerContainer: {

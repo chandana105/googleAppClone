@@ -39,7 +39,7 @@ const SearchScreen = () => {
         ) : (
           <>
             {/* Header */}
-            <View className="flex-row justify-between items-center p-4">
+            <View className="flex-row justify-between items-center p-4 ">
               <Text className="text-gray-400 text-base">Recent searches</Text>
               <Text className="text-gray-400 text-sm uppercase">
                 Manage History

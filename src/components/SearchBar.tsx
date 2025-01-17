@@ -49,7 +49,7 @@ function SearchBar({
 
   return (
     <View
-      className="rounded-full m-4 mt-20 flex flex-row justify-between items-center"
+      className="rounded-full m-4  flex flex-row justify-between items-center"
       style={styles.searchPlaceholder}>
       <View style={styles.leftSection} className="rounded-full px-2">
         <View className="flex flex-row items-center">
@@ -65,7 +65,7 @@ function SearchBar({
             ref={textInputRef}
             className="w-11/12 text-white"
             keyboardType="default"
-            placeholder="Search or type URL"
+            placeholder="Search"
             placeholderTextColor="#aaa"
             value={searchQuery}
             onChangeText={handleInputChange}
